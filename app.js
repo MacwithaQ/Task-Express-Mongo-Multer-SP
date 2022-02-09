@@ -10,7 +10,8 @@ connectDb();
 app.use(cors());
 app.use(express.json());
 
-console.log(__dirname);
+const mediaPath = path.join(__dirname, "media");
+
 app.use((req, res, next) => {
   console.log(
     `${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`
@@ -19,7 +20,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("api/products", productsRoutes);
+app.use("/api/products", productsRoutes);
+app.use("/media", express.static(mediaPath));
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
